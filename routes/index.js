@@ -19,6 +19,7 @@ app.get('/', function(req, res) {
     } 
     res.render('index', {
       title: 'Rui\'s Blog',
+      page_name:'home',
       posts: posts,
       page: page,
       isFirstPage: (page - 1) == 0,
@@ -33,7 +34,8 @@ app.get('/', function(req, res) {
 // Register function
 app.get('/reg', checkNotLogin);
 app.get('/reg', function(req, res) {
-  	res.render('reg', { title: 'Register',
+  	res.render('reg', { 
+      title: 'Register',
   	user: req.session.user,
     success: req.flash('success').toString(),
     error: req.flash('error').toString()
@@ -118,6 +120,7 @@ app.get('/post', checkLogin);
 app.get('/post', function (req, res) {
     res.render('post', {
       title: 'Post',
+      page_name:'post',
       user: req.session.user,
       success: req.flash('success').toString(),
       error: req.flash('error').toString()
@@ -149,6 +152,7 @@ app.get('/tags', function (req, res) {
     }
     res.render('tags', {
       title: 'Tag',
+      page_name:'tags',
       posts: posts,
       user: req.session.user,
       success: req.flash('success').toString(),
@@ -174,12 +178,31 @@ app.get('/tags/:tag', function (req, res) {
   });
 });
 
+// get time 
+app.get('/dates', function (req, res) {
+  Post.getDate (function (err, posts) {
+    if (err) {
+      req.flash('error', err); 
+      return res.redirect('/');
+    }
+    res.render('time', {
+      title: 'Tag',
+      posts: posts,
+      user: req.session.user,
+      success: req.flash('success').toString(),
+      error: req.flash('error').toString()
+    });
+  });
+});
+
+
 // file upload
 
 app.get('/upload', checkLogin);
 app.get('/upload', function (req, res) {
   res.render('upload', {
     title: 'File Upload',
+    page_name:'upload',
     user: req.session.user,
     success: req.flash('success').toString(),
     error: req.flash('error').toString()

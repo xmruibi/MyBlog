@@ -274,6 +274,31 @@ Post.remove = function(name, day, title, callback) {
 };
 
 
+//返回所有时间
+Post.getDate = function(callback) {
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);
+    }
+    db.collection('posts', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);
+      }
+      //distinct 用来找出给定键的所有不同值
+      collection.distinct("time", function (err, docs) {
+        mongodb.close();
+        if (err) {
+          return callback(err);
+        }
+        callback(null, docs);
+      });
+    });
+  });
+};
+
+
+
 //返回所有标签
 Post.getTags = function(callback) {
   mongodb.open(function (err, db) {

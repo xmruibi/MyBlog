@@ -1,5 +1,7 @@
 <%- include header %>
-
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+<div class="blog-post">
  <% if (user && (user.name == post.name)) { %>
     <span><a class="edit" href="/edit/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">Edit</a></span>
     <span><a class="edit" href="/remove/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">Remove</a></span>
@@ -46,4 +48,9 @@
   <% } %>
   </p>
 <%- include comment %>
+</div> <!--end of blog-post -->
+          </div><!-- end of post-main -->
+    </div> <!--end of row -->
+
+
 <%- include footer %>
